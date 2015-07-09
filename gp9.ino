@@ -1,13 +1,13 @@
 #define HWSERIAL Serial1
 #include "gp9_util.h"
- boolean packet_sent = false;
+boolean packet_sent = false;
 
 void setup() {
   Serial.begin(9600);
   HWSERIAL.begin(115200, SERIAL_8N1);
-  
+
   delay(2000);
- 
+
 }
 
 void loop() {
@@ -18,7 +18,7 @@ void loop() {
     //setup_euler();
     packet_sent = true;
   }
-    while(HWSERIAL.available() > 0 && HWSERIAL.read() == 's' && HWSERIAL.read() == 'n' && HWSERIAL.read() == 'p') {
+  while(HWSERIAL.available() > 0 && HWSERIAL.read() == 's' && HWSERIAL.read() == 'n' && HWSERIAL.read() == 'p') {
     Serial.println();
     byte p_type = HWSERIAL.read();
     Serial.print("Packet type: ");
@@ -61,7 +61,7 @@ void loop() {
           Serial.print("Yaw: ");
           Serial.print((double)yaw / 5215.18917);
           Serial.println();
-        } else {
+        } else if(address == 0x78) {
           short roll = 0;
           short pitch = 0;
           roll = p_buffer[0] << 8;
@@ -85,9 +85,9 @@ void loop() {
     Serial.print(checksum, HEX);
     Serial.println();
     Serial.flush();
-    }
-    delay(50);
-    request_yaw();
-    request_pitch_roll();
+  }
+  delay(50);
+  request_yaw();
+  request_pitch_roll();
 }
 
