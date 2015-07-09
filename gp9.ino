@@ -84,6 +84,7 @@ void loop() {
           Serial.println();
 
           double pitchRad = (double)pitch / 5215.18917;
+          Serial.print("PITCH RAD: ");
           Serial.print(pitchRad);
           Serial.println();
           float pitchDeg = (pitchRad * 180 / 3.14159 + 180) / 2;
@@ -93,6 +94,7 @@ void loop() {
           spitch.write(pitchDeg);
 
           double rollRad = (double)roll / 5215.18917;
+          Serial.print("ROLL RAD: ");
           Serial.print(rollRad);
           Serial.println();
           float rollDeg = (rollRad * 180 / 3.14159 + 180) / 2;
