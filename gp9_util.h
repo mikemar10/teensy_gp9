@@ -110,3 +110,16 @@ void request_yaw() {
     HWSERIAL.flush(); 
 }
 
+void request_pitch_roll() {
+    HWSERIAL.write('s');
+    HWSERIAL.write('n');
+    HWSERIAL.write('p');
+    HWSERIAL.write(0);
+    HWSERIAL.write(DREG_EULER_PHI_THETA);
+    unsigned short checksum = (byte)'s' + (byte)'n' + (byte)'p' + DREG_EULER_PHI_THETA;
+    byte checksum_buffer[2];
+    checksum_buffer[0] = checksum >> 8;
+    checksum_buffer[1] = checksum & 0x00ff;
+    HWSERIAL.write(checksum_buffer, 2);
+    HWSERIAL.flush(); 
+}

@@ -25,7 +25,8 @@ void loop() {
     Serial.print(p_type, HEX);
     Serial.println();
     Serial.print("Address: ");
-    Serial.print(HWSERIAL.read(), HEX);
+    byte address = HWSERIAL.read();
+    Serial.print(address, HEX);
     Serial.println();
     if (p_type & 0x80) { //has data
       Serial.println("PACKET HAS DATA");
@@ -53,12 +54,26 @@ void loop() {
           Serial.print(p_buffer[i], HEX);
           Serial.print(" ");
         }
-        short yaw = 0;
-        yaw = p_buffer[0] << 8;
-        yaw = yaw ^ p_buffer[1];
-        Serial.print("Yaw: ");
-        Serial.print((double)yaw / 5215.18917);
-        Serial.println();
+        if(address == 0x79) {
+          short yaw = 0;
+          yaw = p_buffer[0] << 8;
+          yaw = yaw ^ p_buffer[1];
+          Serial.print("Yaw: ");
+          Serial.print((double)yaw / 5215.18917);
+          Serial.println();
+        } else {
+          short roll = 0;
+          short pitch = 0;
+          roll = p_buffer[0] << 8;
+          roll = roll ^ p_buffer[1];
+          Serial.print("Roll: ");
+          Serial.print((double)roll / 5215.18917);
+          pitch = p_buffer[2] << 8;
+          pitch = pitch ^ p_buffer[3];
+          Serial.print(" Pitch: ");
+          Serial.print((double)pitch / 5215.18917);
+          Serial.println();
+        }
       }
     }
 
@@ -73,5 +88,6 @@ void loop() {
     }
     delay(50);
     request_yaw();
+    request_pitch_roll();
 }
 
