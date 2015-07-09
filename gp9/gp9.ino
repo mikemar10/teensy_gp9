@@ -53,11 +53,11 @@ void loop() {
           pitch = pitch ^ p_buffer[3];
 
           double pitchRad = (double)pitch / 5215.18917;
-          float pitchDeg = (pitchRad * 180 / 3.14159 + 180) / 2;
+          float pitchDeg = (pitchRad * 180 / 3.14159 + 180) - 90;
           spitch.write(pitchDeg);
 
           double rollRad = (double)roll / 5215.18917;
-          float rollDeg = (rollRad * 180 / 3.14159 + 180) / 2;
+          float rollDeg = (rollRad * 180 / 3.14159 + 180) - 90;
           sroll.write(rollDeg);
         }
       }
