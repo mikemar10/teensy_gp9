@@ -1,10 +1,19 @@
 #define HWSERIAL Serial1
 #include "gp9_util.h"
+#include <Wire.h>
+#include <Servo.h>
 boolean packet_sent = false;
 
 void setup() {
   Serial.begin(9600);
   HWSERIAL.begin(115200, SERIAL_8N1);
+
+  Servo sroll;
+  sroll.attach(9);
+  sroll.write(0);
+  Servo spitch;
+  spitch.attach(10);
+  spitch.write(0);
 
   delay(2000);
 
@@ -73,6 +82,22 @@ void loop() {
           Serial.print(" Pitch: ");
           Serial.print((double)pitch / 5215.18917);
           Serial.println();
+
+          double pitchRad = (double)pitch / 5215.18917;
+          Serial.print(pitchRad);
+          Serial.println();
+          float pitchDeg = (pitchRad * 180 / 3.14159 + 180) / 2;
+          Serial.print("PITCH DEG: ");
+          Serial.print(pitchDeg); 
+          spitch.write(pitchDeg);
+
+          double rollRad = (double)roll / 5215.18917;
+          Serial.print(rollRad);
+          Serial.println();
+          float rollDeg = (rollRad * 180 / 3.14159 + 180) / 2;
+          Serial.print("ROLL DEG: ");
+          Serial.print(rollDeg);
+          sroll.write(rollDeg);
         }
       }
     }
