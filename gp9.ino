@@ -116,7 +116,7 @@ void loop() {
     Serial.flush();
   }
   delay(50);
-  request_yaw();
+  //request_yaw();
   request_pitch_roll();
 }
 
