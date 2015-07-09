@@ -3,15 +3,15 @@
 #include <Wire.h>
 #include <Servo.h>
 boolean packet_sent = false;
+Servo sroll;
+Servo spitch;
 
 void setup() {
   Serial.begin(9600);
   HWSERIAL.begin(115200, SERIAL_8N1);
 
-  Servo sroll;
   sroll.attach(9);
   sroll.write(0);
-  Servo spitch;
   spitch.attach(10);
   spitch.write(0);
 
