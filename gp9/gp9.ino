@@ -104,11 +104,10 @@ void loop() {
           sroll.write(rollDeg);
         } else if(address == 0x7A) {
           Serial.print("Time Packet: ");
-          float time = 0f;
-          time = p_buffer[0] << 24;
-          time = time ^ p_buffer[1] << 16;
-          time = time ^ p_buffer[2] << 8;
-          time = time ^ p_buffer[3];
+          float time = 0;
+          for(unsigned int i = 0; i < 4; i++) {
+            time = (time << 8) | p_buffer[i];
+          }
           Serial.print(time, DEC);
           Serial.println();
       }
