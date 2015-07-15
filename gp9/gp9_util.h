@@ -8,6 +8,11 @@ struct GP9_Packet {
   unsigned short checksum;
 };
 
+typedef union timefloat {
+  float f;
+  byte b[sizeof(float)];
+};
+
 byte CREG_COM_SETTINGS    = 0x00;
 byte CREG_COM_RATES1      = 0x01;
 byte CREG_COM_RATES2      = 0x02;

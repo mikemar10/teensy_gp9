@@ -87,7 +87,7 @@ void loop() {
           Serial.print("PITCH RAD: ");
           Serial.print(pitchRad);
           Serial.println();
-          float pitchDeg = (pitchRad * 180 / 3.14159 + 180) / 2;
+          float pitchDeg = pitchRad * 180 / 3.14159 + 90;
           Serial.print("PITCH DEG: ");
           Serial.print(pitchDeg);
           Serial.println();
@@ -97,15 +97,18 @@ void loop() {
           Serial.print("ROLL RAD: ");
           Serial.print(rollRad);
           Serial.println();
-          float rollDeg = (rollRad * 180 / 3.14159 + 180) / 2;
+          float rollDeg = rollRad * 180 / 3.14159 + 90;
           Serial.print("ROLL DEG: ");
           Serial.print(rollDeg);
           Serial.println();
           sroll.write(rollDeg);
         } else if(address == 0x7A) {
           Serial.print("Time Packet: ");
-          float* time = (float *)p_buffer;
-          Serial.print(*time, DEC);
+          timefloat time;
+          for(unsigned int i = 0; i < 4; i++) {
+            time.b[i] = p_buffer[i];
+          }
+          Serial.print(time.f, DEC);
           Serial.println();
         }
       }
