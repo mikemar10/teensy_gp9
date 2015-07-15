@@ -8,7 +8,7 @@ struct GP9_Packet {
   unsigned short checksum;
 };
 
-typedef union timefloat {
+union timefloat {
   float f;
   byte b[sizeof(float)];
 };

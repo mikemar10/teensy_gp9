@@ -106,10 +106,9 @@ void loop() {
           Serial.print("Time Packet: ");
           timefloat time;
           for(unsigned int i = 0; i < 4; i++) {
-            time.b[i] = p_buffer[i];
+            time.b[3-i] = p_buffer[i];
           }
-          Serial.print(time.f, DEC);
-          Serial.println();
+          Serial.println(time.f);
         }
       }
     }
