@@ -38,6 +38,7 @@ byte CREG_MAG_BIAS_Y      = 0x4C;
 byte CREG_MAG_BIAS_Z      = 0x4D;
 byte DREG_EULER_PHI_THETA = 0x78;
 byte DREG_EULER_PSI       = 0x79;
+byte DREG_EULER_TIME      = 0x7A;
 
 byte P_HAS_DATA = 0x80;
 byte P_IS_BATCH = 0x40;
@@ -78,10 +79,14 @@ void zero_out() {
   }
 }
 
-void setup_euler() {
+void snp() {
    HWSERIAL.write('s');
    HWSERIAL.write('n');
    HWSERIAL.write('p');
+}
+
+void setup_euler() {
+   snp();
    HWSERIAL.write(0x80);
    HWSERIAL.write(0x05);
    HWSERIAL.write(0);
@@ -97,9 +102,7 @@ void setup_euler() {
 }
 
 void request_yaw() {
-    HWSERIAL.write('s');
-    HWSERIAL.write('n');
-    HWSERIAL.write('p');
+    snp();
     HWSERIAL.write(0);
     HWSERIAL.write(DREG_EULER_PSI);
     unsigned short checksum = (byte)'s' + (byte)'n' + (byte)'p' + DREG_EULER_PSI;
@@ -111,12 +114,22 @@ void request_yaw() {
 }
 
 void request_pitch_roll() {
-    HWSERIAL.write('s');
-    HWSERIAL.write('n');
-    HWSERIAL.write('p');
+    snp();
     HWSERIAL.write(0);
     HWSERIAL.write(DREG_EULER_PHI_THETA);
     unsigned short checksum = (byte)'s' + (byte)'n' + (byte)'p' + DREG_EULER_PHI_THETA;
+    byte checksum_buffer[2];
+    checksum_buffer[0] = checksum >> 8;
+    checksum_buffer[1] = checksum & 0x00ff;
+    HWSERIAL.write(checksum_buffer, 2);
+    HWSERIAL.flush(); 
+}
+
+void request_euler_time() {
+    snp();
+    HWSERIAL.write(0);
+    HWSERIAL.write(DREG_EULER_TIME);
+    unsigned short checksum = (byte)'s' + (byte)'n' + (byte)'p' + DREG_EULER_TIME;
     byte checksum_buffer[2];
     checksum_buffer[0] = checksum >> 8;
     checksum_buffer[1] = checksum & 0x00ff;

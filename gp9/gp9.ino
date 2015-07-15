@@ -102,7 +102,15 @@ void loop() {
           Serial.print(rollDeg);
           Serial.println();
           sroll.write(rollDeg);
-        }
+        } else if(address == 0x7A) {
+          Serial.print("Time Packet: ");
+          float time = 0f;
+          time = p_buffer[0] << 24;
+          time = time ^ p_buffer[1] << 16;
+          time = time ^ p_buffer[2] << 8;
+          time = time ^ p_buffer[3];
+          Serial.print(time, DEC);
+          Serial.println();
       }
     }
 
@@ -118,5 +126,6 @@ void loop() {
   delay(50);
   //request_yaw();
   request_pitch_roll();
+  request_euler_time();
 }
 
