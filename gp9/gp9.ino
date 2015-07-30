@@ -2,9 +2,11 @@
 #include "gp9_util.h"
 #include <Wire.h>
 #include <Servo.h>
+
 boolean packet_sent = false;
 Servo sroll;
 Servo spitch;
+
 
 void setup() {
   Serial.begin(9600);
