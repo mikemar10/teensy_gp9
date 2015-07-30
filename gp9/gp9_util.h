@@ -5,7 +5,7 @@ struct dreg {
   unsigned char value[4];
 };
 
-extern dreg g_registers[16];
+dreg g_registers[16];
 
 // headers are stupid
 void read_packet();
