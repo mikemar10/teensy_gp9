@@ -1,7 +1,10 @@
+#include <Dynamixel_Serial.h>
+
 #define HWSERIAL Serial1
 #include "gp9_util.h"
 #include <Wire.h>
 #include <Servo.h>
+
 
 boolean packet_sent = false;
 Servo sroll;
