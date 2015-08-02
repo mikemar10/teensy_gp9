@@ -6,6 +6,15 @@
 #include <Servo.h>
 
 
+// Servo constants
+#define SERVO1_ID       0x01
+#define SERVO2_ID       0x02
+#define SERVO_PIN      0x02  // TODO: Change to proper pin - schultz
+#define SERVO_BAUDRATE  57600
+#define SERVO_CW_LIMIT  0x001
+#define SERVO_CCW_LIMIT 0xFFF
+
+
 boolean packet_sent = false;
 Servo sroll;
 Servo spitch;
@@ -14,6 +23,11 @@ Servo spitch;
 void setup() {
   Serial.begin(9600);
   HWSERIAL.begin(115200, SERIAL_8N1);
+
+  // Init servos
+  Dynamixel.begin(SERVO_BAUDRATE, SERVO_PIN);
+  Dynamixel.setMode(SERVO1_ID, SERVO, SERVO_CW_LIMIT, SERVO_CCW_LIMIT);
+  Dynamixel.setMode(SERVO2_ID, SERVO, SERVO_CW_LIMIT, SERVO_CCW_LIMIT);
 
   sroll.attach(9);
   sroll.write(0);
