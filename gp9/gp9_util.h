@@ -178,7 +178,7 @@ void request_yaw() {
     checksum_buffer[0] = checksum >> 8;
     checksum_buffer[1] = checksum & 0x00ff;
     HWSERIAL.write(checksum_buffer, 2);
-    HWSERIAL.flush(); 
+    HWSERIAL.flush();
 }
 
 void request_pitch_roll() {
@@ -192,7 +192,7 @@ void request_pitch_roll() {
     checksum_buffer[0] = checksum >> 8;
     checksum_buffer[1] = checksum & 0x00ff;
     HWSERIAL.write(checksum_buffer, 2);
-    HWSERIAL.flush(); 
+    HWSERIAL.flush();
 }
 
 // This really needs a way to pass a reference to the serial object
